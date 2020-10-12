@@ -46,6 +46,11 @@ try {
     if ($post) {
         $post = json_decode($post);
     }
+    if (isset($_GET['authenticatorAttachment'])) {
+        $authenticatorAttachment = filter_input(INPUT_GET, 'authenticatorAttachment', FILTER_SANITIZE_SPECIAL_CHARS);
+    } else {
+        $authenticatorAttachment = null;
+    }
 
     // Formats
     $formats = array();
@@ -109,7 +114,7 @@ try {
     // ------------------------------------
 
     if ($fn === 'getCreateArgs') {
-        $createArgs = $WebAuthn->getCreateArgs('demo', 'demo', 'Demo Demolin', 20, $requireResidentKey, $userVerification);
+        $createArgs = $WebAuthn->getCreateArgs('demo', 'demo', 'Demo Demolin', 20, $requireResidentKey, $userVerification, array(), $authenticatorAttachment);
 
         print(json_encode($createArgs));
 

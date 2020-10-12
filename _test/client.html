@@ -228,6 +228,13 @@ license https://github.com/lbuchs/WebAuthn/blob/master/LICENSE MIT
                 url += '&userVerification=discouraged';
             }
 
+            if (document.getElementById('authenticatorAttachment_platform').checked) {
+                url += '&authenticatorAttachment=platform';
+                
+            } else if (document.getElementById('authenticatorAttachment_crossplatform').checked) {
+                url += '&authenticatorAttachment=crossplatform';
+            }
+
             return url;
         }
 
@@ -331,6 +338,24 @@ license https://github.com/lbuchs/WebAuthn/blob/master/LICENSE MIT
             <div>
                 <input type="radio" id="userVerification_discouraged" name="userVerification">
                 <label for="userVerification_discouraged">discouraged <i>user verification should not be employed as to minimize the user interaction during the process.</i></label>
+            </div>
+
+
+            <div>&nbsp;</div>
+            <div style="font-weight: bold">authenticator attachment</div>
+            <div>
+                <input type="radio" id="authenticatorAttachment_none" name="authenticatorAttachment" checked>
+                <label for="authenticatorAttachment_none">none <i>no setting</i></label>
+            </div>
+
+            <div>
+                <input type="radio" id="authenticatorAttachment_platform" name="authenticatorAttachment">
+                <label for="authenticatorAttachment_platform">platform <i>authenticator which is bound to the client and which is generally not removable</i></label>
+            </div>
+
+            <div>
+                <input type="radio" id="authenticatorAttachment_crossplatform" name="authenticatorAttachment">
+                <label for="authenticatorAttachment_crossplatform">cross-platform <i>device which may be used across different platform (such as a USB or NFC device)</i></label>
             </div>
 
 
