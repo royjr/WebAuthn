@@ -46,8 +46,8 @@ try {
     if ($post) {
         $post = json_decode($post);
     }
-    if (isset($_GET['authenticatorAttachment'])) {
-        $authenticatorAttachment = filter_input(INPUT_GET, 'authenticatorAttachment', FILTER_SANITIZE_SPECIAL_CHARS);
+    if (isset($_GET['authenticatorAttachment']) && in_array($_GET['authenticatorAttachment'], ['platform', 'cross-platform'])) {
+        $authenticatorAttachment = $_GET['authenticatorAttachment'];
     } else {
         $authenticatorAttachment = null;
     }
