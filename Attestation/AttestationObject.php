@@ -68,17 +68,25 @@ class AttestationObject {
     public function getCertificateIssuer() {
         $pem = $this->getCertificatePem();
         $issuer = '';
+        $issuerSubs = [];
         if ($pem) {
             $certInfo = \openssl_x509_parse($pem);
             if (\is_array($certInfo) && \is_array($certInfo['issuer'])) {
                 if ($certInfo['issuer']['CN']) {
                     $issuer .= \trim($certInfo['issuer']['CN']);
                 }
-                if ($certInfo['issuer']['O'] || $certInfo['issuer']['OU']) {
+                if (isset($certInfo['issuer']['O'])) {
+                    $issuerSubs[] = \trim($certInfo['issuer']['O']);
+                }
+                if (isset($certInfo['issuer']['OU'])) {
+                    $issuerSubs[] = \trim($certInfo['issuer']['OU']);
+                }
+                if (count($issuerSubs) > 0) {
+                    $issuerSubsStr = implode($issuerSubs, ' ');
                     if ($issuer) {
-                        $issuer .= ' (' . \trim($certInfo['issuer']['O'] . ' ' . $certInfo['issuer']['OU']) . ')';
+                        $issuer .= ' (' . $issuerSubsStr . ')';
                     } else {
-                        $issuer .= \trim($certInfo['issuer']['O'] . ' ' . $certInfo['issuer']['OU']);
+                        $issuer .= $issuerSubsStr;
                     }
                 }
             }
@@ -94,17 +102,25 @@ class AttestationObject {
     public function getCertificateSubject() {
         $pem = $this->getCertificatePem();
         $subject = '';
+        $subjectSubs = [];
         if ($pem) {
             $certInfo = \openssl_x509_parse($pem);
             if (\is_array($certInfo) && \is_array($certInfo['subject'])) {
                 if ($certInfo['subject']['CN']) {
                     $subject .= \trim($certInfo['subject']['CN']);
                 }
-                if ($certInfo['subject']['O'] || $certInfo['subject']['OU']) {
+                if (isset($certInfo['subject']['O'])) {
+                    $subjectSubs[] = \trim($certInfo['subject']['O']);
+                }
+                if (isset($certInfo['subject']['OU'])) {
+                    $subjectSubs[] = \trim($certInfo['subject']['OU']);
+                }
+                if (count($subjectSubs) > 0) {
+                    $subjectSubsStr = implode($subjectSubs, ' ');
                     if ($subject) {
-                        $subject .= ' (' . \trim($certInfo['subject']['O'] . ' ' . $certInfo['subject']['OU']) . ')';
+                        $subject .= ' (' . $subjectSubsStr . ')';
                     } else {
-                        $subject .= \trim($certInfo['subject']['O'] . ' ' . $certInfo['subject']['OU']);
+                        $subject .= $subjectSubsStr;
                     }
                 }
             }
